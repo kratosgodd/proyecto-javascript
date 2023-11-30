@@ -1,28 +1,50 @@
-console.log("hi wordl");
+let intentosRestantes = 3;
+let numeroSecreto = generarNumeroSecreto();
 
-let surname;
-let telephone;
+function verificarAdivinanza() {
+    const numeroInput = parseInt(document.getElementById('numeroInput').value);
+    const resultadoParrafo = document.getElementById('resultado');
+    const intentosParrafo = document.getElementById('intentos');
 
-surname = "Perez";
-console.log(surname);
+    if (isNaN(numeroInput)) {
+        resultadoParrafo.textContent = 'ingresa un número válido.';
+    } else {
+        if (numeroInput === numeroSecreto) {
+            resultadoParrafo.textContent = 'Adivinaste el número secreto.';
+            rondasJugadas++;
+            reiniciarJuego();
+        } else {
+            intentosRestantes--;
 
-telephone = 1234
-console.log(telephone);
+            if (intentosRestantes > 0) {
+                intentosParrafo.textContent = 'Te quedan ' + intentosRestantes + ' intentos.';
+                resultadoParrafo.textContent = 'Incorrecto. Intenta de nuevo.';
+            } else {
+                resultadoParrafo.textContent = 'Agotaste tus intentos. El número secreto era ' + numeroSecreto + '.';
+                rondasJugadas++;
+                reiniciarJuego();
+            }
+        }
+    }
+}
 
-let country = "Argentina";
-let age = 21;
+function reiniciarJuego() {
+    intentosRestantes = 3;
+    numeroSecreto = generarNumeroSecreto();
+    document.getElementById('intentos').textContent = '';
+    document.getElementById('numeroInput').value = '';
+    document.getElementById('resultado').textContent = '';
 
-console.log(country);
-console.log(age);
+    if (rondasJugadas < 3) {
+        document.getElementById('intentos').textContent = 'Ronda ' + (rondasJugadas + 1) + '. Intenta adivinar otro número.';
+    } else {
+        document.getElementById('intentos').textContent = 'Has completado todas las rondas. Muy bien';
+    }
+}
 
-var fruit = "banana"
-console.log(fruit);
-
-fruit = "apple"
-console.log(fruit);
-
-const greeting = "hi"
-console.log(greeting);
+function generarNumeroSecreto() {
+    return Math.floor(Math.random() * 5) + 1;
+}
 
 
 
